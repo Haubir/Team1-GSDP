@@ -37,4 +37,4 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    app.run(host='https://runestone-robot.herokuapp.com/', threaded=True)
+    app.run(host='https://runestone-robot.herokuapp.com/', port=80, threaded=True)
