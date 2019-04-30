@@ -1,0 +1,1 @@
+web: gunicornapp.hello:app
