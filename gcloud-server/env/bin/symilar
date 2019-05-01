@@ -1,0 +1,12 @@
+#!/bin/sh
+'''exec' "/Users/Haubir/Documents/Plugg/År 4/Internationell mjukvaruutveckling, projekt/Repo/Team1-GSDP/gcloud-server/env/bin/python3.7" "$0" "$@"
+' '''
+# -*- coding: utf-8 -*-
+import re
+import sys
+
+from pylint import run_symilar
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(run_symilar())
