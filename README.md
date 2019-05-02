@@ -1,30 +1,45 @@
-# Team01
-The project of Team 01 in the Runestone project of the GSDP course, spring of 2019.
+# Python: Getting Started
 
-# Some Heroku commands :
+A barebones Django app, which can easily be deployed to Heroku.
 
-# Login
-heroku login
+This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
 
-# Create an Heroku app
-heroku create [appname]
+## Running Locally
 
-# Deploy code
-git push heroku master
+Make sure you have Python 3.7 [installed locally](http://install.python-guide.org). To push to Heroku, you'll need to install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli), as well as [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup).
 
-# Ensure that at least one instance of the app is running (1 = on, 0 = off)
-heroku ps:scale web=1
+```sh
+$ git clone https://github.com/heroku/python-getting-started.git
+$ cd python-getting-started
 
-# Open
-heroku open
+$ python3 -m venv getting-started
+$ pip install -r requirements.txt
 
-# View logs
-heroku logs --tail
+$ createdb python_getting_started
 
-# Update :
-# Add everything to git repository
-git add .
-# Commit the changes with comment
-git commit -m "Latest update."
-# Deploy code
-git push heroku master
+$ python manage.py migrate
+$ python manage.py collectstatic
+
+$ heroku local
+```
+
+Your app should now be running on [localhost:5000](http://localhost:5000/).
+
+## Deploying to Heroku
+
+```sh
+$ heroku create
+$ git push heroku master
+
+$ heroku run python manage.py migrate
+$ heroku open
+```
+or
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+## Documentation
+
+For more information about using Python on Heroku, see these Dev Center articles:
+
+- [Python on Heroku](https://devcenter.heroku.com/categories/python)
