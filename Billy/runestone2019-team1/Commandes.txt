@@ -1,0 +1,9 @@
+heroku login
+heroku git:remote -a runestone-robot
+git push heroku server/master:master
+
+set DATABASE_URL=postgres://$(whoami)
+
+Postgres port : 5432
+
+heroku local web -f Procfile.windows

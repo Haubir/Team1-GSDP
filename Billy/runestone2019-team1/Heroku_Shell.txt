@@ -1,0 +1,45 @@
+# Some Heroku commands :
+# Login
+heroku login
+
+# Create an Heroku app
+heroku create [appname]
+
+# Deploy code
+git push heroku master
+
+# Ensure that at least one instance of the app is running (1 = on, 0 = off)
+heroku ps:scale web=1
+
+# Open
+heroku open
+
+# View logs
+heroku logs --tail
+
+# Update :
+# Add everything to git repository
+git add .
+# Commit the changes with comment
+git commit -m "Latest update."
+# Deploy code
+git push heroku master
+
+# Some Git commands :
+# Check which branch you're in, what you've changed
+git branch
+git status
+
+# Change branch
+git checkout server/master
+
+# Pull
+git pull
+
+# Update :
+# Add all to git
+git add .
+# Upload
+git commit -m "Message"
+# Push
+git push
