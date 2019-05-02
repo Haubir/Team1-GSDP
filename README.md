@@ -21,7 +21,7 @@ heroku open
 # View logs
 heroku logs --tail
 
-# Update
+# Update :
 # Add everything to git repository
 git add .
 # Commit the changes with comment
