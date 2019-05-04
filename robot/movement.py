@@ -3,25 +3,30 @@ from ev3dev2.motor import SpeedPercent
 
 class Movement:
     """Movement controller of two wheels"""
-    def __init__(self, motor):
-        self.motor = motor
+    def __init__(self, lmotor, rmotor):
+        self.lmotor = lmotor
+        self.rmotor = rmotor
 
     def move(self, left_speed, right_speed, time=None):
         if time is None:
-            self.motor.on(left_speed, right_speed)
+            self.lmotor.run_forever(speed_sp=left_speed)
+            self.rmotor.run_forever(speed_sp=right_speed)
         else:
-            self.motor.on_for_seconds(left_speed, right_speed, time)
+            mili_secs = 1000 * time
+            self.lmotor.run_timed(speed_sp=left_speed, time_sp=mili_secs)
+            self.rmotor.run_timed(speed_sp=right_speed, time_sp=mili_secs)
             
-    def forward(self, speed=SpeedPercent(40), time=None):
+    def forward(self, speed=SpeedPercent(10), time=None):
         self.move(speed, speed, time)
 
-    def turn_left(self, left_speed=SpeedPercent(10), right_speed=SpeedPercent(30), time=None):
+    def turn_left(self, left_speed=SpeedPercent(10), right_speed=SpeedPercent(15), time=None):
         """Left wheel speed must be less than right one to make a left turn"""
         self.move(left_speed, right_speed, time)
 
-    def turn_right(self, left_speed=SpeedPercent(30), right_speed=SpeedPercent(10), time=None):
+    def turn_right(self, left_speed=SpeedPercent(15), right_speed=SpeedPercent(10), time=None):
         """Right wheel speed must be less than left one to make a right turn"""
         self.move(left_speed, right_speed, time)
 
     def stop(self):
-        self.motor.stop()
+        self.lmotor.stop()
+        self.rmotor.stop()
