@@ -16,14 +16,14 @@ class Movement:
             self.lmotor.run_timed(speed_sp=left_speed, time_sp=mili_secs)
             self.rmotor.run_timed(speed_sp=right_speed, time_sp=mili_secs)
             
-    def forward(self, speed=SpeedPercent(10), time=None):
+    def forward(self, speed=300, time=None):
         self.move(speed, speed, time)
 
-    def turn_left(self, left_speed=SpeedPercent(10), right_speed=SpeedPercent(15), time=None):
+    def turn_left(self, left_speed=0, right_speed=300, time=None):
         """Left wheel speed must be less than right one to make a left turn"""
         self.move(left_speed, right_speed, time)
 
-    def turn_right(self, left_speed=SpeedPercent(15), right_speed=SpeedPercent(10), time=None):
+    def turn_right(self, left_speed=300, right_speed=0, time=None):
         """Right wheel speed must be less than left one to make a right turn"""
         self.move(left_speed, right_speed, time)
 

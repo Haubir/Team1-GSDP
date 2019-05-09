@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from ev3dev2.motor import OUTPUT_C, OUTPUT_B, OUTPUT_D, MoveSteering, MoveTank, MediumMotor, SpeedPercent, LargeMotor
-from ev3dev2.sensor.lego import ColorSensor
+from ev3dev2.sensor.lego import ColorSensor, GyroSensor
 
 from movement import Movement
 from arm import Arm
@@ -56,9 +56,11 @@ def run():
 
 def run_pid():
     cs = ColorSensor()
-    Kp = 40   # proportional gain
-    Ki = 0   # integral gain
-    Kd = 1    # derivative gain
+    gs = GyroSensor()
+    gs.mode = GyroSensor.MODE_GYRO_ANG
+    Kp = 40     # proportional gain
+    Ki = 0      # integral gain
+    Kd = 1      # derivative gain
     
     integral = 0
     previous_error = 0
@@ -68,8 +70,11 @@ def run_pid():
     # initial measurment
     target_value = 130
     while True:
+        angle = gs.angle
         red = cs.rgb[0]
-        print("Red = {}".format(red))
+        green = cs.rgb[1]
+        blue = cs.rgb[2]
+        # print(cs.rgb)
         error = red - target_value
         integral += error
         derivative = error - previous_error
@@ -81,15 +86,36 @@ def run_pid():
         rspeed = min(max_speed, base_speed - correction)
         mv.move(lspeed, rspeed)
         previous_error = error
+        if (green > 230) and (red < 100) and (blue < 100):
+            mv.turn_left(right_speed=120)
+            while True:
+                diff = abs(gs.angle - angle) % 360
+                if 80 < diff < 100:
+                    break
 
+        if (red > 230) and (green < 100) and (blue < 100)
+            mv.turn_right(left_speed=120)
+            while True:
+                diff = abs(gs.angle - angle) % 360
+                if 80 < diff < 100:
+                    break
+                
 
 if __name__ == "__main__":
     try:
-        run_pid()
+        # run_pid()
+        mv.forward(speed=100, time=2)
+        mv.stop()
+        arm.lift()
+        mv.forward(time=1)
+        mv.stop()
+        arm.drop()
+        mv.move(-100, -100, time=2)
     except KeyboardInterrupt:
         arm.stop()
         mv.stop()
         print("\nShut down the robot\n")
-    except Exception:
+    except Exception as ex:
+        print(ex)
         arm.stop()
         mv.stop()
