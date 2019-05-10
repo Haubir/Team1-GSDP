@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-from ev3dev2.motor import OUTPUT_C, OUTPUT_B, OUTPUT_D
+from time import sleep
+
+from ev3dev2.motor import OUTPUT_C, OUTPUT_B, OUTPUT_D, SpeedPercent, LargeMotor, MediumMotor
 from ev3dev2.sensor.lego import ColorSensor, GyroSensor
 
 from movement import Movement
@@ -16,6 +18,7 @@ class Robot:
         self.cs = ColorSensor()
         self.gs = GyroSensor()
         self.gs.mode = GyroSensor.MODE_GYRO_ANG
+        self.hasPackage = False
 
     def run(self):
         """Run robot based on PID control"""
@@ -44,7 +47,7 @@ class Robot:
             correction = int(turn)
             lspeed = min(max_speed, base_speed + correction)
             rspeed = min(max_speed, base_speed - correction)
-            mv.move(lspeed, rspeed)
+            self.mv.move(lspeed, rspeed)
             previous_error = error
             # In autonomous mode, different colors should be placed on robot path
             if self.mode == OperationMode.AUTONOMOUS:
@@ -54,6 +57,23 @@ class Robot:
                 # Turn right if color sensor is red
                 if (red > 230) and (green < 100) and (blue < 100):
                     self.turn_right(angle)
+                if (red > 230) and (green > 230) and (blue < 100):
+                    if self.hasPackage:
+                        self.stop()
+                        sleep(1)
+                        self.drop()
+                        sleep(1)
+                        self.backward(time=2, block=True)
+                        self.hasPackage = False
+                        raise Exception("Stop")
+                    else:
+                        self.stop()
+                        sleep(1)
+                        self.lift(deg=70)
+                        self.hasPackage = True
+                        self.forward(time=1, block=True)
+
+                
 
     def turn_left(self, previous_angle=None):
         """Tun 90 degrees to the left"""
@@ -76,3 +96,46 @@ class Robot:
             diff = abs(self.gs.angle - previous_angle) % 360
             if 80 < diff < 100:
                 break
+
+    def __move(self, speed=150, time=None, block=False):
+        if not block:
+            self.mv.forward(speed, time)
+        else:
+            self.mv.forward(speed, time)
+            sleep(time)
+
+    def forward(self, speed=150, time=None, block=False):
+        if speed < 0:
+            raise ValueError("Speed must be positive to run forward")
+        self.__move(speed, time, block)
+    
+    def backward(self, speed=-150, time=None, block=False):
+        if speed > 0:
+            raise ValueError("Speed must be negative to run backward")
+        self.__move(speed, time, block)
+
+    def lift(self, speed=SpeedPercent(7), deg=70):
+        if deg < 0:
+            raise ValueError("Degree must be positive for arm to lift")
+        self.arm.move(speed, deg)
+
+    def drop(self, speed=SpeedPercent(7), deg=-70):
+        if deg > 0:
+            raise ValueError("Degree must be negative for arm to drop")
+        self.arm.move(speed, deg)
+
+    def stop(self):
+        self.mv.stop()
+        self.arm.stop()
+
+if __name__ == "__main__":
+    try:
+        robot = Robot()
+        robot.run()
+    except KeyboardInterrupt:
+        robot.stop()
+        print("\nShut down the robot\n")
+    except Exception as ex:
+        print(ex)
+        robot.stop()
+        # robot.drop()

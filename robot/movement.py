@@ -16,7 +16,7 @@ class Movement:
             self.lmotor.run_timed(speed_sp=left_speed, time_sp=mili_secs)
             self.rmotor.run_timed(speed_sp=right_speed, time_sp=mili_secs)
             
-    def forward(self, speed=300, time=None):
+    def forward(self, speed=100, time=None):
         self.move(speed, speed, time)
 
     def turn_left(self, left_speed=0, right_speed=300, time=None):

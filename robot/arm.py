@@ -8,10 +8,10 @@ class Arm:
     def move(self, speed, deg):
         self.arm.on_for_degrees(speed, deg)
 
-    def lift(self, speed=SpeedPercent(10), deg=60):
+    def lift(self, speed=SpeedPercent(7), deg=60):
         self.move(speed, deg)
 
-    def drop(self, speed=SpeedPercent(10), deg=-60):
+    def drop(self, speed=SpeedPercent(7), deg=-60):
         self.move(speed, deg)
 
     def stop(self):
