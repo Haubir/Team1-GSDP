@@ -1,0 +1,32 @@
+<html>
+  <body>
+    <p id='server-time'></p> <!-- line 3 -->
+    <p id='error-message'></p>
+    <script> 
+      // GUI client code
+      var HOST = location.origin.replace(/^http/, 'ws')
+      var ws = new WebSocket(HOST);
+      var el = document.getElementById('server-time');
+      var err = document.getElementById('error-message');
+      
+      ws.onopen = () => {
+        // Connection is opened and ready to use
+        ws.send('GUI client');
+        // Insert following into robot client file:
+        // ws.send('Robot');
+      };
+      
+      ws.onerror = error => {
+        // An error occured
+        err.innerHTML = 'Error message' + error.data + '';
+      };
+
+      ws.onmessage = message => {
+        // Handle incoming messages from the server
+        el.innerHTML = 'Server time: ' + message.data + ', as the Great Medes spawns upon new targets';
+      };
+    </script> <!-- line 11 -->
+    <!-- Billy code below -->
+
+  </body>
+</html>

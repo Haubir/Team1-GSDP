@@ -1,0 +1,2 @@
+release: chmod 755 example.sh && ./example.sh
+web: node server.js
