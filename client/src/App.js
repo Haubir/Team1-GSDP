@@ -16,10 +16,10 @@ class App extends Component {
     const { command } = this.props;
     document.addEventListener('keypress', (e) => {
       switch(e.code) {
-        case 'KeyW': command("forwards"); break;
+        case 'KeyW': command("forward"); break;
         case 'KeyA': command("left"); break;
         case 'KeyD': command("right"); break;
-        case 'KeyS': command("backwards"); break;
+        case 'KeyS': command("lift"); break;
         default: console.log(e.code)
       }
     })
@@ -53,15 +53,16 @@ class App extends Component {
             </div>
             <div className="direction">
               <div className="level1">
-                <button className="straightDirection" onClick={() => command("forwards!!")}><i className="glyphicon glyphicon-arrow-up"></i></button>
+                <button className="straightDirection" onClick={() => command("forward")}><i className="glyphicon glyphicon-arrow-up"></i></button>
               </div>
               <div className="level2">
-                <button className="turnDirection" onClick={() => command("Left!!")}><i className="glyphicon glyphicon-share-alt turn-left"></i></button>
-                <button className="center" onClick={() => command("Pause")}><i className="glyphicon glyphicon-play"></i></button>
-                <button className="turnDirection" onClick={() => command("Right!!")}><i className="glyphicon glyphicon-share-alt"></i></button>
+                <button className="turnDirection" onClick={() => command("left")}><i className="glyphicon glyphicon-share-alt turn-left"></i></button>
+                <button className="center" onClick={() => command("stop")}><i className="glyphicon glyphicon-play"></i></button>
+                <button className="turnDirection" onClick={() => command("right")}><i className="glyphicon glyphicon-share-alt"></i></button>
               </div>
               <div className="level3">
-                <button className="straightDirection" onClick={() => command("Backwards!!")}><i className="glyphicon glyphicon-arrow-down"></i></button>
+                <button className="straightDirection" onClick={() => command("lift")}><i className="glyphicon glyphicon-arrow-down"></i></button>
+                <button className="straightDirection" onClick={() => command("drop")}><i className="glyphicon glyphicon-arrow-down"></i></button>
               </div>
             </div>
 
