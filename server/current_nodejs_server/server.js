@@ -1,11 +1,13 @@
 'use strict';
 
 const express = require('express');
+const WebSocket = require('ws').WebSocket;
 const SocketServer = require('ws').Server;
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'public/pages/client.html');
+
 
 // ugly fugly below
 /*
@@ -15,28 +17,33 @@ log["hello"] = "world";
 // ugly fugly ends here
 
 const server = express()
-  .use((req, res) => res.sendFile(INDEX) )
-  .listen(PORT, () => console.log(`We are listening on ${ PORT }`));
+.use((req, res) => res.sendFile(INDEX) )
+.listen(PORT, () => console.log(`We are listening on ${ PORT }`));
 
 const wss = new SocketServer({ server });
 
+var gws;
+var rws;
 
-wss.on('connection', (ws) => {
+wss.on('connection', (ws, req) => {
   ws.on('message', message => {
     //console.log(`New message: ${message}`);
     if (message === 'GUI client' || message === 'Robot') {
+
+      if (message === 'GUI client') gws = ws;
+      else if (identity === 'Robot') rws = ws;
+
       console.log('New connection detected, awaiting identity...');
-      wss.clients[ws] = message;
-      console.log(`${wss.clients[ws]} has connected`);
+      
+      console.log(`${message} has connected`);
     }
-    else {
-      console.log(`${wss.clients[ws]}: ${message}`);
-      console.log(wss.clients.has('Robot'));
-      if (wss.clients.has('Robot')) {
-        rws = wss.clients['Robot'];
-        console.log(wss.clients['Robot']);
-        rws.send(message);
-      }
+    else if (message.startsWith('GUI:')) {
+      console.log(`${message.split(':')[0]}: ${message.split(':')[1]}`);
+      console.log('Passing on message..');
+      gws.send(message.split(':')[1]);
+    }
+    else if (message.startsWith('Robot:')) {
+      console.log(`${message.split(':')[0]}: ${message.split(':')[1]}`);
     }
   });
   ws.on('close', () => console.log(`${wss.clients[ws]} disconnected`));
@@ -45,8 +52,8 @@ wss.on('connection', (ws) => {
 // setInterval allows a function to run regularly with the interval netween the runs.
 setInterval(() => {
   wss.clients.forEach((client) => {
-    var msg = 'time:' + new Date().toTimeString();
-    client.send(msg);
+    var msg = new Date().toTimeString();
+    client.send('time:' + msg);
     //client.send(log);
   });
 }, 1000);

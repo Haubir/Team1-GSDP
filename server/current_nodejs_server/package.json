@@ -14,10 +14,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4",
-    "ws": "^7.0.0",
     "bufferutil": "^4.0.1",
-    "utf-8-validate": "^5.0.2"
+    "express": "^4.16.4",
+    "utf-8-validate": "^5.0.2",
+    "websocket": "^1.0.28",
+    "ws": "^7.0.0"
   },
   "repository": {
     "type": "git",

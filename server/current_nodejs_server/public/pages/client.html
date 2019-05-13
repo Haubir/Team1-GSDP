@@ -133,50 +133,152 @@
     <p id='server-time'></p>
     <p id='server-message'></p>
     <button id='robot-forwards'>Forwards</button>
-    <button id='robot-left'>Left</button>
-    <button id='robot-right'>Right</button>
-    <button id='robot-backwards'>Backwards</button>
-    <script id='gui-script'>
+    <button id='robot-left'>Turn left</button>
+    <button id='robot-right'>Turn right</button>
+    <button id='robot-lift'>Lift</button>
+    <button id='robot-drop'>Drop</button>
+    <button id='robot-response'>Robot-reponse</button>
+
+    <script async=true id='gui-script'>
       var HOST = location.origin.replace(/^http/, 'ws')
       var ws = new WebSocket(HOST);
       var el = document.getElementById('server-time');
       var fwr = document.getElementById('robot-forwards');
       var lft = document.getElementById('robot-left');
       var rgt = document.getElementById('robot-right');
-      var bwr = document.getElementById('robot-backwards');
+      var lr = document.getElementById('robot-lift');
+      var ldr = document.getElementById('robot-drop');
+      var rbrsp = document.getElementById('robot-response');
       var sm = document.getElementById('server-message');
-      
+      const msgpack = 'GUI:';
+
       ws.onopen = () => {
         // Connection is opened and ready to use
         ws.send('GUI client');
-        // Insert following into robot client file:
-        // ws.send('Robot');
+        
+      };
+
+      var command = ''
+      ws.onmessage = message => {
+        // Handle incoming messages from the server
+        if (!message.data.startsWith('time:')) {
+          switch(message.data) {
+            case 'moved forward':
+              /* send forwards signal to robot HERE */
+              command = 'moved forward'; // response to server log
+              break;
+            case 'turned left':
+              /* send left signal to robot HERE */
+              command = 'turned left'; // response to server log
+              break;
+            case 'turned right':
+              /* send right signal to robot HERE */
+              command = 'turned right'; // response to server log
+              break;
+            case 'lifted':
+              /* send lift signal to robot HERE */
+              command = 'lifted'; // response to server log
+              break;
+            case 'dropped':
+              /* send drop signal to robot HERE */
+              command = 'dropped'; // response to server log
+              break;
+            /*
+            case 'stop':
+              // send stop signal to robot
+              command = 'stop'
+              break;
+            */
+            default:
+              command = 'says that the recent command was not recognized';
+              break;
+          }
+        }
+        else {
+          el.innerHTML = 'Server time: ' + message.data + ', client side.';
+        }
+      };
+
+      
+      // Button listeners
+      fwr.onclick = () => {
+        sm.innerHTML = "Forwards!!";
+        ws.send(msgpack+'moved forward');
+      };
+      lft.onclick = () => {
+        sm.innerHTML = "Left!!";
+        ws.send(msgpack+'turned left');
+      };
+      rgt.onclick = () => {
+        sm.innerHTML = "Right!!";
+        ws.send(msgpack+'turned right');
+      };
+      lr.onclick = () => {
+        sm.innerHTML = "Lift!!";
+        ws.send(msgpack+'lifted');
+      };
+      ldr.onclick = () => {
+        sm.innerHTML = "Drop!!";
+        ws.send(msgpack+'dropped');
+      };
+      rbrsp.onclick = () => {
+          ws.send(msgpack+'Robot ' + command);
+      };
+    </script>
+
+    <!--Robot script-->
+    <script async=true id='robot-script'>
+      var HOST = location.origin.replace(/^http/, 'ws')
+      var ws = new WebSocket(HOST);
+      
+      const msgpack = 'Robot:';
+
+      ws.onopen = () => {
+        // Connection is opened and ready to use
+        ws.send('Robot');
       };
 
       ws.onmessage = message => {
         // Handle incoming messages from the server
-        el.innerHTML = 'Server time: ' + message.data + ', client side.';
-      };
+        if (!message.startsWith('time:')) {
+          command = ''
+          switch(message.data) {
+            case 'forwards':
+              // send forwards signal to robot
+              command = 'forwards';
+              break;
+            case 'left':
+              // send left signal to robot
+              command = 'left';
+              break;
+            case 'right':
+              // send right signal to robot
+              command = 'right';
+              break;
+            case 'backwards':
+              // send backwards signal to robot
+              command = 'backwards';
+              break;
+            /*
+            case 'stop':
+              // send stop signal to robot
+              command = 'stop'
+              break;
+            */
+            default:
+              command = 'not recognized';
+              break;
+          }
+        }
+        else {
+          ws.send(msgpack+'We do not need to know the time good sir');
+        }
 
-      // Button listeners
-      fwr.onclick = () => {
-        sm.innerHTML = "Forwards!!";
-        ws.send('forwards');
-      };
-      lft.onclick = () => {
-        sm.innerHTML = "Left!!";
-        ws.send('left');
-      };
-      rgt.onclick = () => {
-        sm.innerHTML = "Right!!";
-        ws.send('right');
-      };
-      bwr.onclick = () => {
-        sm.innerHTML = "Backwards!!";
-        ws.send('backwards');
+        rbrsp.onclick = () => {
+          ws.send(msgpack+'Robot moved ' + command);
+        };
       };
     </script>
-
 
     <!--<p id='server-time'></p>
     <script src="gui-client.js"></script>-->
@@ -188,62 +290,6 @@
   </div>
 
   <div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
-      <!--Robot script-->
-      <p id='robot-server-time'></p>
-      <p id='gui-message'></p>
-      <script id='robot-script'>
-        var HOST = location.origin.replace(/^http/, 'ws')
-        var ws = new WebSocket(HOST);
-        var el = document.getElementById('robot-server-time');
-        var sm = document.getElementById('gui-message');
-        
-        ws.onopen = () => {
-          // Connection is opened and ready to use
-          ws.send('Robot');
-          // Insert following into robot client file:
-          // ws.send('Robot');
-        };
-
-        ws.onmessage = message => {
-          // Handle incoming messages from the server
-          if (message.startsWith('time:')) {
-            time = message.data.split('time:')[1];
-            el.innerHTML = 'Server time: ' + time + ', robot side.';
-          }
-          else {
-            command = ''
-            switch(message.data) {
-              case 'forwards':
-                // send forwards signal to robot
-                command = 'forwards';
-                break;
-              case 'left':
-                // send left signal to robot
-                command = 'left';
-                break;
-              case 'right':
-                // send right signal to robot
-                command = 'right';
-                break;
-              case 'backwards':
-                // send backwards signal to robot
-                command = 'backwards';
-                break;
-              /*
-              case 'stop':
-                // send stop signal to robot
-                command = 'stop'
-                break;
-              */
-              default:
-                command = 'not recognized';
-                break;
-            }
-            sm.innerHTML = 'Robot moved  ' + command;
-          }
-
-        };
-      </script>
       <h1 class="w3-margin w3-xlarge">Team members:</h1>
       <h1 class="w3-margin w3-xlarge">Billy Clerc, Công Thành Bùi, Haubir Mariwani, Huy Pham, Krishnamurthy Gajapathy, Tu Pham</h1>
   </div>
