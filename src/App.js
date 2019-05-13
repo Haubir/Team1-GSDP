@@ -11,10 +11,25 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
+
+  initKeyPress() {
+    const { command } = this.props;
+    document.addEventListener('keypress', (e) => {
+      switch(e.code) {
+        case 'KeyW': command("forwards"); break;
+        case 'KeyA': command("left"); break;
+        case 'KeyD': command("right"); break;
+        case 'KeyS': command("backwards"); break;
+        default: console.log(e.code)
+      }
+    })
+  }
   
 
   componentDidMount() {
-    console.log("component will mount")
+    this.initKeyPress()
+    const { connectToServer } = this.props;
+    connectToServer(window.location.href);
     const video = document.getElementById('video');
     console.log("video: ", video);
     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -28,8 +43,7 @@ class App extends Component {
   }
 
   render() {
-    const {message, test} = this.props;
-    console.log("render")
+    const {message, test, command} = this.props;
     return (
       <div className="App">
         <div className="container">
@@ -39,15 +53,15 @@ class App extends Component {
             </div>
             <div className="direction">
               <div className="level1">
-                <button className="straightDirection"><i className="glyphicon glyphicon-arrow-up"></i></button>
+                <button className="straightDirection" onClick={() => command("forwards!!")}><i className="glyphicon glyphicon-arrow-up"></i></button>
               </div>
               <div className="level2">
-                <button className="turnDirection"><i className="glyphicon glyphicon-share-alt turn-left"></i></button>
-                <button className="center"><i className="glyphicon glyphicon-play"></i></button>
-                <button className="turnDirection"><i className="glyphicon glyphicon-share-alt"></i></button>
+                <button className="turnDirection" onClick={() => command("Left!!")}><i className="glyphicon glyphicon-share-alt turn-left"></i></button>
+                <button className="center" onClick={() => command("Pause")}><i className="glyphicon glyphicon-play"></i></button>
+                <button className="turnDirection" onClick={() => command("Right!!")}><i className="glyphicon glyphicon-share-alt"></i></button>
               </div>
               <div className="level3">
-                <button className="straightDirection"><i className="glyphicon glyphicon-arrow-down"></i></button>
+                <button className="straightDirection" onClick={() => command("Backwards!!")}><i className="glyphicon glyphicon-arrow-down"></i></button>
               </div>
             </div>
 
@@ -66,7 +80,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  test: appActions.test
+  test: appActions.test,
+  connectToServer: appActions.connectToServer,
+  command: appActions.command
 }
 
 App = connect (
