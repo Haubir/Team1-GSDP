@@ -73,8 +73,6 @@ class Robot:
                         self.hasPackage = True
                         self.forward(time=1, block=True)
 
-                
-
     def turn_left(self, previous_angle=None):
         """Tun 90 degrees to the left"""
         if not previous_angle:
@@ -127,6 +125,7 @@ class Robot:
     def stop(self):
         self.mv.stop()
         self.arm.stop()
+
 
 if __name__ == "__main__":
     try:
