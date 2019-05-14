@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import socketio
 from robot import Robot
 
@@ -21,6 +22,11 @@ def on_message(data):
 def forward(data):
     print('forward')
     robot.forward()
+
+@sio.on('backward')
+def backward(data):
+    print('backward')
+    robot.backward()
 
 
 @sio.on('left')
@@ -53,5 +59,14 @@ def test(data):
     robot.stop()
 
 
-sio.connect('ws://localhost:5000')
-sio.wait()
+try:
+    sio.connect('https://server-robot.herokuapp.com')
+    sio.wait()
+except KeyboardInterrupt:
+    print("Disconnect to server")
+    sio.disconnect()
+    robot.stop()
+except Exception:
+    print("Disconnect to server")
+    sio.disconnect()
+    robot.stop()
