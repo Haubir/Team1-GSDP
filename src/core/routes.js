@@ -1,6 +1,8 @@
 import App from '../App'
-import Camera from '../components/camera';
-import Main from '../components/main/main';
+// import Camera from '../components/camera';
+// import Main from '../components/main/main';
+import MainDisplay from '../components/mainDisplay';
+import MainCamera from '../components/mainCamera';
 
 
 
@@ -11,12 +13,12 @@ export const routes = {
 	childRoutes: [
 		{
 			indexRoute: {
-				component: Main
+				component: MainDisplay
 			}
 		},
 		{
 			path: '/camera',
-			component: Camera
+			component: MainCamera
 		}
 	]
 };

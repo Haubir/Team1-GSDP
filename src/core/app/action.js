@@ -1,11 +1,11 @@
 import socketIOClient from "socket.io-client";
 
-let ws = {}
+// let ws = {}
 let socket = {}
 
-ws.onopen = () => {
-    ws.send("GUI client");
-}
+// ws.onopen = () => {
+//     ws.send("GUI client");
+// }
 
 export const appActions = {
     test: () => dispatch => {
@@ -14,13 +14,13 @@ export const appActions = {
             payload: "result ok"
         })
     },
-    connectToServer: (url) => dispatch => {
-        ws = new WebSocket(url.replace(/^http/, 'ws'))
-        ws.onmessage = message => {
-            if(message.type !== "message") {
-                console.log("message: ", message);
-            }
-        }
+    connectToServer: () => dispatch => {
+        // ws = new WebSocket(url.replace(/^http/, 'ws'))
+        // ws.onmessage = message => {
+        //     if(message.type !== "message") {
+        //         console.log("message: ", message);
+        //     }
+        // }
 
         socket = socketIOClient("https://server-robot.herokuapp.com/");
         // socket.on("FromAPI", data => this.setState({ response: data }));
