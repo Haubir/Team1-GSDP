@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
 
-import { appActions } from './core/app'
+import { appActions } from '../../core/app'
 
-import logo from './logo.svg';
-import './App.css';
-
-class App extends Component {
+class Main extends Component {
 
   constructor(props) {
     super(props);
@@ -78,7 +75,30 @@ class App extends Component {
     const {message, test, command} = this.props;
     return (
       <div className="App">
-        {this.props.children}
+        <div className="container">
+          <div className="content">
+            <div id="videoContainer" >
+              <video id="video" width="100%" height="100%" autoPlay></video>
+            </div>
+            <div className="direction">
+              <div className="level1">
+                <button className="straightDirection" onClick={() => command("forward")}><i className="glyphicon glyphicon-arrow-up"></i></button>
+              </div>
+              <div className="level2">
+                <button className="turnDirection" onClick={() => command("left")}><i className="glyphicon glyphicon-share-alt turn-left"></i></button>
+                <button className="center" onClick={() => command("stop")}><i className="glyphicon glyphicon-play"></i></button>
+                <button className="turnDirection" onClick={() => command("right")}><i className="glyphicon glyphicon-share-alt"></i></button>
+              </div>
+              <div className="level3">
+                <button className="straightDirection" onClick={() => command("lift")}><i className="glyphicon glyphicon-upload"></i></button>
+                <button className="straightDirection" onClick={() => command("drop")}><i className="glyphicon glyphicon-download"></i></button>
+                <button className="straightDirection" onClick={() => command("auto")}><i className="glyphicon glyphicon-font"></i></button>
+              </div>
+            </div>
+
+            <div className="information"></div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -96,9 +116,9 @@ const mapDispatchToProps = {
   command: appActions.command
 }
 
-App = connect (
+Main = connect (
 	mapStateToProps,
 	mapDispatchToProps
-) ( App )
+) ( Main )
 
-export default App;
+export default Main;
