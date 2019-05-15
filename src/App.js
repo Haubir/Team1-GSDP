@@ -37,7 +37,7 @@ class App extends Component {
           <div className="jumbotron text-center">
             <div className="container">
               <a href="/" className="lang-logo">
-                <img src="http://localhost:3000/images/lang-logo.png"/>
+                {/* <img src="http://localhost:3000/images/lang-logo.png"/> */}
               </a>
               <h1>Live Video Stream - Client</h1>
               <p>Welcome to the Runestone Robot application! On this page you can see the video.</p>
@@ -51,7 +51,7 @@ class App extends Component {
             <hr/>
 
             <center>
-            <img src=""/>
+            {/* <img src=""/> */}
             </center>
 
             <br/>
