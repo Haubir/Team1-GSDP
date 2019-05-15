@@ -36,14 +36,14 @@ class MainDisplay extends Component {
     const WS_URL = window.location.origin.replace(/^http/, 'ws');
     // const FPS = 10;
     const ws = new WebSocket(WS_URL);
-
+    const img = document.querySelector('img');
     ws.onopen = () => console.log(`Connected to ${WS_URL}`);
     ws.onmessage = message => {
         // set the base64 string to the src tag of the image
         // img.src = message.data;
         // console.log("src: ", message.data)
-        this.setState({imgSrc: message.data})
-        
+        // this.setState({imgSrc: message.data})
+        img.src = message.data
     }
   }
 
