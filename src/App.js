@@ -19,7 +19,7 @@ class App extends Component {
         case 'KeyW': command("forward"); break;
         case 'KeyA': command("left"); break;
         case 'KeyD': command("right"); break;
-        case 'KeyS': command("lift"); break;
+        case 'KeyS': command("stop"); break;
         default: console.log(e.code)
       }
     })
@@ -61,8 +61,9 @@ class App extends Component {
                 <button className="turnDirection" onClick={() => command("right")}><i className="glyphicon glyphicon-share-alt"></i></button>
               </div>
               <div className="level3">
-                <button className="straightDirection" onClick={() => command("lift")}><i className="glyphicon glyphicon-arrow-down"></i></button>
-                <button className="straightDirection" onClick={() => command("drop")}><i className="glyphicon glyphicon-arrow-down"></i></button>
+                <button className="straightDirection" onClick={() => command("lift")}><i className="glyphicon glyphicon-upload"></i></button>
+                <button className="straightDirection" onClick={() => command("drop")}><i className="glyphicon glyphicon-download"></i></button>
+                <button className="straightDirection" onClick={() => command("auto")}><i className="glyphicon glyphicon-font"></i></button>
               </div>
             </div>
 

@@ -22,7 +22,7 @@ export const appActions = {
             }
         }
 
-        socket = socketIOClient("http://127.0.0.1:5000");
+        socket = socketIOClient("https://server-robot.herokuapp.com/");
         // socket.on("FromAPI", data => this.setState({ response: data }));
     },
     command: (textCmd) => dispatch => {
