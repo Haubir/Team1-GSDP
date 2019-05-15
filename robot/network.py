@@ -1,27 +1,31 @@
 #!/usr/bin/env python3
 import socketio
+
+from config import config
 from robot import Robot
+from constants import OperationMode
 
-# standard Python
+
 sio = socketio.Client()
-
-robot = Robot()
+robot = None
 
 
 @sio.on('connect')
 def on_connect():
-    print('I\'m connected!')
+    print('I\'m connected to server')
+    sio.emit('join', {'from': 'robot'})
 
 
 @sio.on('message')
 def on_message(data):
-    print('I received a message!')
+    print('I received a message!: {}'.format(data))
 
 
 @sio.on('forward')
 def forward(data):
     print('forward')
     robot.forward()
+
 
 @sio.on('backward')
 def backward(data):
@@ -53,20 +57,28 @@ def lift(data):
     robot.lift()
 
 
+@sio.on('auto')
+def auto_run(data):
+    print('auto run')
+    robot.mode = OperationMode.AUTONOMOUS
+    robot.run()
+
+
 @sio.on('stop')
-def test(data):
+def stop(data):
     print('stop')
     robot.stop()
 
 
-try:
-    sio.connect('https://server-robot.herokuapp.com')
-    sio.wait()
-except KeyboardInterrupt:
-    print("Disconnect to server")
-    sio.disconnect()
-    robot.stop()
-except Exception:
-    print("Disconnect to server")
-    sio.disconnect()
-    robot.stop()
+def connect(robot_instance):
+    try:
+        global robot
+        robot = robot_instance
+        sio.connect(config.SERVER_URL)
+        sio.wait()
+    except KeyboardInterrupt:
+        print("Disconnect to server")
+        sio.disconnect()
+    except Exception:
+        print("Disconnect to server")
+        sio.disconnect()

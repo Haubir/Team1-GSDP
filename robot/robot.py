@@ -10,11 +10,12 @@ from constants import OperationMode
 
 
 class Robot:
-    def __init__(self, mode=OperationMode.AUTONOMOUS):
+    def __init__(self, mode=OperationMode.REMOTE):
         self.mode = mode
         self.mv = Movement(LargeMotor(OUTPUT_B), LargeMotor(OUTPUT_C))
         self.arm = Arm(MediumMotor(OUTPUT_D))
-        self.speed = 150
+        self.speed = 100
+        self.__stop = True
         self.cs = ColorSensor()
         self.gs = GyroSensor()
         self.gs.mode = GyroSensor.MODE_GYRO_ANG
@@ -26,13 +27,14 @@ class Robot:
         Ki = 0      # Integral gain
         Kd = 1      # Derivative gain
         
+        self.__stop = False
         integral = 0
         previous_error = 0
         derivative = 0
         base_speed = self.speed
         max_speed = 900
         target_value = 130
-        while True:
+        while not self.__stop:
             angle = self.gs.angle
             red = self.cs.rgb[0]
             green = self.cs.rgb[1]
@@ -83,6 +85,7 @@ class Robot:
             diff = abs(self.gs.angle - previous_angle) % 360
             if 80 < diff < 100:
                 break
+        self.stop()
 
     def turn_right(self, previous_angle=None):
         """Turn 90 degrees to the right"""
@@ -94,8 +97,10 @@ class Robot:
             diff = abs(self.gs.angle - previous_angle) % 360
             if 80 < diff < 100:
                 break
+        self.stop()
 
     def __move(self, speed=150, time=None, block=False):
+        self.__stop = False
         if not block:
             self.mv.forward(speed, time)
         else:
@@ -123,6 +128,7 @@ class Robot:
         self.arm.move(speed, deg)
 
     def stop(self):
+        self.__stop = True
         self.mv.stop()
         self.arm.stop()
 
@@ -137,4 +143,3 @@ if __name__ == "__main__":
     except Exception as ex:
         print(ex)
         robot.stop()
-        # robot.drop()
