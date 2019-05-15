@@ -25,6 +25,11 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -151,5 +156,83 @@ button {
 .turn-left {
   transform: scaleX(-1);
 }
+
+.jumbotron {
+        background: #24478f;
+        color: white;
+        padding-bottom: 40px;
+        padding-top: 120px
+    }
+    .jumbotron .btn-primary {
+        background: #845ac7;
+        border-color: #845ac7
+    }
+    .jumbotron .btn-primary:hover {
+        background: #7646c1
+    }
+    .jumbotron p {
+        color: #d9ccee;
+        max-width: 75%;
+        margin: 1em auto 2em
+    }
+    .navbar+.jumbotron {
+        margin-top: -20px
+    }
+    .jumbotron .lang-logo {
+        display: block;
+        background: #b01302;
+        border-radius: 50%;
+        overflow: hidden;
+        width: 100px;
+        height: 100px;
+        margin: auto;
+        border: 2px solid white
+    }
+    .jumbotron .lang-logo img {
+        max-width: 100%
+    }
+
+    body {margin:0;}
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      font-size: 18px;
+      padding: 16px 40px;
+      text-decoration: none;
+    }
+
+    li a:hover {
+      color: white;
+    }
+
+    li a:hover:not(.active) {
+      background-color: #111;
+    }
+
+    .active {
+      background-color: #b30000;
+    }
+
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+    .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+    .fa-anchor,.fa-coffee {font-size:200px}
+
   </style>
 </html>
