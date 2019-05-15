@@ -6,6 +6,10 @@ class MainCamera extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      ws: {}
+    }
   }
 
   componentDidMount() {
@@ -27,6 +31,7 @@ class MainCamera extends Component {
     console.log(WS_URL)
     const FPS = 10;
     const ws = new WebSocket(WS_URL);
+    this.setState({ws})
     ws.onopen = () => {
         console.log(`Connected to ${WS_URL}`);
         setInterval(() => {
@@ -34,6 +39,10 @@ class MainCamera extends Component {
             ws.send(getFrame());
         }, 1000 / FPS);
     }
+  }
+
+  componentWillUnmount() {
+    this.state.ws.close()
   }
 
   render() {

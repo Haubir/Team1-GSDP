@@ -11,7 +11,8 @@ class MainDisplay extends Component {
     super(props);
 
     this.state = {
-        imgSrc: ""
+        imgSrc: "",
+        ws: {}
     }
   }
 
@@ -36,7 +37,9 @@ class MainDisplay extends Component {
     const WS_URL = window.location.origin.replace(/^http/, 'ws');
     // const FPS = 10;
     const ws = new WebSocket(WS_URL);
-    const img = document.querySelector('img');
+    
+    this.setState({ws})
+    const img = document.querySelector('img#video');
     ws.onopen = () => console.log(`Connected to ${WS_URL}`);
     ws.onmessage = message => {
         // set the base64 string to the src tag of the image
@@ -45,6 +48,10 @@ class MainDisplay extends Component {
         // this.setState({imgSrc: message.data})
         img.src = message.data
     }
+  }
+
+  componentWillUnmount() {
+    this.state.ws.close()
   }
 
   render() {
