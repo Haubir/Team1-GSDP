@@ -30,7 +30,7 @@ class MainCamera extends Component {
     ws.onopen = () => {
         console.log(`Connected to ${WS_URL}`);
         setInterval(() => {
-            console.log("sending: ")
+            // console.log("sending: ")
             ws.send(getFrame());
         }, 1000 / FPS);
     }
