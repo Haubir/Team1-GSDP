@@ -22,7 +22,7 @@ class Main extends Component {
       }
     })
   }
-  
+
 
   componentDidMount() {
     this.initKeyPress()
@@ -47,7 +47,7 @@ class Main extends Component {
     navigator.msGetUserMedia;
 
     const pc2 = new peerConnection({"iceServers":[{"url": "stun:stun.l.google.com:19302"}]})
-    
+
     const video = document.getElementById('video');
 
     pc2.onaddstream = function(obj) {
@@ -74,6 +74,7 @@ class Main extends Component {
   render() {
     const {message, test, command} = this.props;
     return (
+      <center>
       <div className="App">
         <div className="container">
           <div className="content">
@@ -100,6 +101,7 @@ class Main extends Component {
           </div>
         </div>
       </div>
+      </center>
     );
   }
 }
