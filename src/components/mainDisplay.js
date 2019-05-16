@@ -57,7 +57,6 @@ class MainDisplay extends Component {
   render() {
     const {message, test, command} = this.props;
     return (
-      <center>
       <div className="App">
         <div className="container">
           <div className="content">
@@ -85,7 +84,6 @@ class MainDisplay extends Component {
           </div>
         </div>
       </div>
-      </center
     );
   }
 }

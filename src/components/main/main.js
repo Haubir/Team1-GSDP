@@ -74,7 +74,6 @@ class Main extends Component {
   render() {
     const {message, test, command} = this.props;
     return (
-      <center>
       <div className="App">
         <div className="container">
           <div className="content">
@@ -101,7 +100,6 @@ class Main extends Component {
           </div>
         </div>
       </div>
-      </center>
     );
   }
 }

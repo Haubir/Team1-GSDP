@@ -48,7 +48,6 @@ class MainCamera extends Component {
   render() {
     const {message, test, command} = this.props;
     return (
-      <center>
       <div className="MainCamera">
         <div className="container">
           <div className="content">
@@ -59,7 +58,6 @@ class MainCamera extends Component {
           </div>
         </div>
       </div>
-      </center
     );
   }
 }
