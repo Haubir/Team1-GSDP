@@ -8,7 +8,7 @@ const initialState = Immutable({
 export const appReducer = ( state = initialState, action) => {
     switch(action.type) {
 
-        case "TEST_ACTION":
+        case "NEW_MESSAGE":
             return state.set('message', action.payload)
         
         default:

@@ -23,7 +23,21 @@ export const appActions = {
         // }
 
         socket = socketIOClient("https://server-robot.herokuapp.com/");
+        
+        // socket.connected(() => { console.log("connected")})
         // socket.on("FromAPI", data => this.setState({ response: data }));
+        socket.on('connect', () => {
+            // console.log(socket.id); // 'G5p5...'
+            socket.emit("join", {from : "user"})
+        });
+
+        socket.on("message", data => {
+            console.log("msg: ", data)
+            dispatch({
+                type: "NEW_MESSAGE",
+                payload: data.content
+            })
+        })
     },
     command: (textCmd) => dispatch => {
         socket.emit(textCmd, {message: textCmd});

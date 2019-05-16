@@ -55,7 +55,7 @@ class MainDisplay extends Component {
   }
 
   render() {
-    const {message, test, command} = this.props;
+    const {message, command} = this.props;
     return (
       <div className="App">
         <div className="container">
@@ -64,6 +64,7 @@ class MainDisplay extends Component {
               {/* <video id="video" width="100%" height="100%" autoPlay></video> */}
               <img id="video" width="100%" height="100%" src={this.state.imgSrc} alt=""></img>
             </div>
+            <div style={{textAlign: "center", color: "red"}}>{message}</div>
             <div className="direction">
               <div className="level1">
                 <button className="straightDirection" onClick={() => command("forward")}><i className="glyphicon glyphicon-arrow-up"></i></button>
@@ -72,6 +73,9 @@ class MainDisplay extends Component {
                 <button className="turnDirection" onClick={() => command("left")}><i className="glyphicon glyphicon-share-alt turn-left"></i></button>
                 <button className="center" onClick={() => command("stop")}><i className="glyphicon glyphicon-play"></i></button>
                 <button className="turnDirection" onClick={() => command("right")}><i className="glyphicon glyphicon-share-alt"></i></button>
+              </div>
+              <div className="level3">
+                <button className="straightDirection" onClick={() => command("backward")}><i className="glyphicon glyphicon-arrow-down"></i></button>
               </div>
               <div className="level3">
                 <button className="straightDirection" onClick={() => command("lift")}><i className="glyphicon glyphicon-upload"></i></button>
