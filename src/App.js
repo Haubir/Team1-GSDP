@@ -27,7 +27,7 @@ class App extends Component {
 
         <div className="w3-top">
             <ul>
-              {/* <li><a href="https://runestone2019-team01.herokuapp.com/" style={{textDecoration: "none"}}><span className="glyphicon glyphicon-home"></span> Home</a></li> */}
+              <li><a href="https://runestone2019-team01.herokuapp.com/" style={{textDecoration: "none"}}><span className="glyphicon glyphicon-home"></span> Home</a></li>
               <li><a onClick={() => this.goTo('/')} className={this.props.router.location.pathname === '/'? 'active': ''} style={{textDecoration: "none"}}>Client</a></li>
               <li><a onClick={() => this.goTo('/camera')}  className={this.props.router.location.pathname === '/camera'? 'active': ''} style={{textDecoration: "none"}}>Camera</a></li>
               <li className="navbar-right"><a href="https://github.com/Haubir/Team1-GSDP" style={{textDecoration: "none"}}><span className="glyphicon glyphicon-book"></span> Repository</a></li>
@@ -36,8 +36,8 @@ class App extends Component {
 
           <div className="jumbotron text-center">
             <div className="container">
-              <h1>GSDP Runestone Robot - Team 01</h1>
-              <p>Welcome to the Runestone Robot application! Follow the adventures of the robot as it navigates through the warehouse and moves packages between different locations!</p>
+              <h1>Graphical User Interface</h1>
+              <p>Welcome to the Runestone Robot application! You can find the GUI to control the robot just below!</p>
             </div>
           </div>
 
