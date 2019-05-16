@@ -37,7 +37,7 @@ class App extends Component {
           <div className="jumbotron text-center">
             <div className="container">
               <h1>Graphical User Interface</h1>
-              <p>Welcome to the Runestone Robot application!<br>The GUI is used to control the robot from a distance, over a server. You can find it right below.</p>
+              <p>Welcome to the Runestone Robot application! The GUI is used to control the robot from a distance, over a server. You can find it right below.</p>
             </div>
           </div>
 
