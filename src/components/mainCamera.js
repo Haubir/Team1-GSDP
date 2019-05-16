@@ -14,10 +14,10 @@ class MainCamera extends Component {
 
   componentDidMount() {
     const video = document.querySelector('#video');
-        
+
     // request access to webcam
     navigator.mediaDevices.getUserMedia({video: {width: 426, height: 240}}).then((stream) => video.srcObject = stream);
-    
+
     // returns a frame encoded in base64
     const getFrame = () => {
         const canvas = document.createElement('canvas');
@@ -48,6 +48,7 @@ class MainCamera extends Component {
   render() {
     const {message, test, command} = this.props;
     return (
+      <center>
       <div className="MainCamera">
         <div className="container">
           <div className="content">
@@ -58,6 +59,7 @@ class MainCamera extends Component {
           </div>
         </div>
       </div>
+      </center
     );
   }
 }

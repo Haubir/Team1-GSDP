@@ -28,7 +28,7 @@ class MainDisplay extends Component {
       }
     })
   }
-  
+
 
   componentDidMount() {
     this.initKeyPress()
@@ -37,7 +37,7 @@ class MainDisplay extends Component {
     const WS_URL = window.location.origin.replace(/^http/, 'ws');
     // const FPS = 10;
     const ws = new WebSocket(WS_URL);
-    
+
     this.setState({ws})
     const img = document.querySelector('img#video');
     ws.onopen = () => console.log(`Connected to ${WS_URL}`);
@@ -57,6 +57,7 @@ class MainDisplay extends Component {
   render() {
     const {message, test, command} = this.props;
     return (
+      <center>
       <div className="App">
         <div className="container">
           <div className="content">
@@ -84,6 +85,7 @@ class MainDisplay extends Component {
           </div>
         </div>
       </div>
+      </center
     );
   }
 }
