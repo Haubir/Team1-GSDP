@@ -10,7 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
-  
+
 
   componentDidMount() {
   }
@@ -27,20 +27,17 @@ class App extends Component {
 
         <div className="w3-top">
             <ul>
-              {/* <li><a href="https://runestone2019-team01.herokuapp.com/" style={{textDecoration: "none"}}><span className="glyphicon glyphicon-home"></span> Home</a></li> */}
-              <li><a onClick={() => this.goTo('/')} className={this.props.router.location.pathname === '/'? 'active': ''} style={{textDecoration: "none"}}>Streamer</a></li>
-              <li><a onClick={() => this.goTo('/camera')}  className={this.props.router.location.pathname === '/camera'? 'active': ''} style={{textDecoration: "none"}}>Client</a></li>
-              <li className="navbar-right"><a href="https://github.com/Haubir/Team1-GSDP" style={{textDecoration: "none"}}><span className="glyphicon glyphicon-book"></span> Repository</a></li>
+            <li><a onClick={() => this.goTo('/')} className={this.props.router.location.pathname === '/'? 'active': ''} style={{textDecoration: "none"}} style={{textDecoration: "none"}}><span className="glyphicon glyphicon-home"></span> &nbsp; Home</a></li>
+            <li><a onClick={() => this.goTo('/client')} className={this.props.router.location.pathname === '/client'? 'active': ''} style={{textDecoration: "none"}}><span className="glyphicon glyphicon-briefcase"></span> &nbsp; Client</a></li>
+            <li><a onClick={() => this.goTo('/camera')}  className={this.props.router.location.pathname === '/camera'? 'active': ''} style={{textDecoration: "none"}}><span className="glyphicon glyphicon-facetime-video"></span> &nbsp; Camera</a></li>
+            <li className="navbar-right"><a href="https://github.com/Haubir/Team1-GSDP" style={{textDecoration: "none"}}><span className="glyphicon glyphicon-book"></span> &nbsp; Repository</a></li>
             </ul>
           </div>
 
           <div className="jumbotron text-center">
             <div className="container">
-              <a href="/" className="lang-logo">
-                {/* <img src="http://localhost:3000/images/lang-logo.png"/> */}
-              </a>
-              <h1>Live Video Stream - Client</h1>
-              <p>Welcome to the Runestone Robot application! On this page you can see the video.</p>
+              <h1>Graphical User Interface</h1>
+              <p>Welcome to the Runestone Robot application! The GUI is used to control the robot from a distance, over a server. You can find it right below.</p>
             </div>
           </div>
 
@@ -62,12 +59,12 @@ class App extends Component {
               <h1 className="w3-margin w3-xlarge">Team members:</h1>
               <h1 className="w3-margin w3-xlarge">Billy Clerc, Công Thành Bùi, Haubir Mariwani, Huy Pham, Krishnamurthy Gajapathy, Tu Pham</h1>
           </div>
-            
+
           <footer className="w3-container w3-padding-64 w3-center w3-opacity">
           <p>Original template provided by <a href="https://www.heroku.com/" target="_blank">Heroku</a> and <a href="https://www.w3schools.com/" target="_blank">w3schools.com</a></p>
           <p>Livestream over server credit to https://github.com/alexcambose/webcam-base64-streaming.git</p>
           </footer>
-          
+
       </div>
     );
   }
