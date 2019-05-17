@@ -14,7 +14,7 @@ class Robot:
         self.mode = mode
         self.mv = Movement(LargeMotor(OUTPUT_B), LargeMotor(OUTPUT_C))
         self.arm = Arm(MediumMotor(OUTPUT_D))
-        self.speed = 100
+        self.speed = 130
         self.__stop = True
         self.cs = ColorSensor()
         self.gs = GyroSensor()
@@ -51,8 +51,8 @@ class Robot:
             rspeed = min(max_speed, base_speed - correction)
             self.mv.move(lspeed, rspeed)
             previous_error = error
-            # In autonomous mode, different colors should be placed on robot path
-            if self.mode == OperationMode.AUTONOMOUS:
+            # In automation mode, different colors should be placed on robot path
+            if self.mode == OperationMode.AUTO:
                 # Turn left if color sensor is green
                 if (green > 230) and (red < 100) and (blue < 100):
                     self.turn_left(angle)
@@ -67,7 +67,7 @@ class Robot:
                         sleep(1)
                         self.backward(time=2, block=True)
                         self.hasPackage = False
-                        raise Exception("Stop")
+                        self.stop()
                     else:
                         self.stop()
                         sleep(1)
@@ -83,9 +83,11 @@ class Robot:
         self.mv.turn_left(right_speed=120)
         while True:
             diff = abs(self.gs.angle - previous_angle) % 360
-            if 80 < diff < 100:
+            if 85 < diff < 95:
                 break
-        self.stop()
+
+        if self.mode == OperationMode.REMOTE:
+            self.stop()
 
     def turn_right(self, previous_angle=None):
         """Turn 90 degrees to the right"""
@@ -95,9 +97,11 @@ class Robot:
         self.mv.turn_right(left_speed=120)
         while True:
             diff = abs(self.gs.angle - previous_angle) % 360
-            if 80 < diff < 100:
+            if 85 < diff < 95:
                 break
-        self.stop()
+
+        if self.mode == OperationMode.REMOTE:
+            self.stop()
 
     def __move(self, speed=150, time=None, block=False):
         self.__stop = False
@@ -135,7 +139,7 @@ class Robot:
 
 if __name__ == "__main__":
     try:
-        robot = Robot()
+        robot = Robot(mode=OperationMode.AUTO)
         robot.run()
     except KeyboardInterrupt:
         robot.stop()

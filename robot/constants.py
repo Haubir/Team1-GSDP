@@ -5,5 +5,5 @@ class Direction:
 
 
 class OperationMode:
-    AUTONOMOUS = 1
+    AUTO = 1
     REMOTE = 2

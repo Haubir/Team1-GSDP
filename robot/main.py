@@ -8,8 +8,9 @@ if __name__ == "__main__":
         robot = Robot()
         network.connect(robot)
     except KeyboardInterrupt:
-        robot.stop()
         print("\nShut down the robot\n")
+        robot.stop()
     except Exception as ex:
+        print("\nShut down the robot\n")
         print(ex)
         robot.stop()
